@@ -1,4 +1,4 @@
-# HPDF_PROJECT1## The Expo Link For Project Is Here :-
+# The Expo Link For Project Is Here :-
  * https://expo.io/@skynet-08/chatbot
 <image src=" https://drive.google.com/open?id=1N0xKsUWsGUOt7AEwHrX-ipq13snW2ugF"/>
  
@@ -44,71 +44,96 @@ Work the tutorial at your own pace. The instructions below assume that you are c
 ## Code  :-
 ```jsx
 
-import React from 'react';
+import React, { Component } from 'react';
+import { View,TextInput,ImageBackground,StyleSheet } from 'react-native';
+import { Container, Header, Title, Content, FooterTab, Button, Left, Right, Body, Icon, Text,Input,InputGroup} from 'native-base';
+export default class Example extends Component {
+ state={
+    isReady: false
+  }
 
-import { StyleSheet, Text, View,ImageBackground,Image,TouchableOpacity,TextInput,Linking} from 'react-native';
-
-
-import {Header,Container,Left,Title,Body,Right} from 'native-base';
-
-
-export default class App extends React.Component {
-  state={
-   isReady: false
-        }
-
- async componentWillMount() {
- await Expo.Font.loadAsync({
-   'Roboto': require('native-base/Fonts/Roboto.ttf'),
-   'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
- });
- this.setState({isReady:true})
+  async componentWillMount() {
+  await Expo.Font.loadAsync({
+    'Roboto': require('native-base/Fonts/Roboto.ttf'),
+    'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+  });
+  this.setState({isReady:true})
 }
 
+ handlePress = async () => {
+              fetch('https://app.abstraction59.hasura-app.io/webhook', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      "type": "select",
+                "args": {
+                    "table": "author",
+                    "columns": [
+                        "name"
+                    ],
+                    "limit": "1"
+  }
+    })
+})
+
+            requestOptions.body = JSON.stringify(body);
+
+            fetch(url, requestOptions)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(result) {
+                console.log(result);
+            })
+            .catch(function(error) {
+                console.log('Request Failed:' + error);
+            });
+      }
 
 
-render() {
-
-   if (!this.state.isReady) {
+  render() {
+     if (!this.state.isReady) {
     return <Expo.AppLoading />;
          }
 
 
-return (
-
-        <ImageBackground source={require('./rt.jpeg')}style={styles.container}>
-        <Container>
-            <Header style={styles.headerStyle}>
-              <Left>
+  return(
+    <Container>
+       <Header style={styles.headerStyle}>
+            <Left>
                 <Body>
-                  <Title style={styles.headerTitleStyle}>Online Store</Title>
+                   <Title style={styles.headerTitleStyle}>Online Store</Title>
                 </Body>
-              </Left>
-           </Header>
-        </Container>
-  <View style={styles.logocontainer}>
-  
-           <Image source={require('./gg.png')} style={styles.logo}/>
-  </View>
+            </Left>
+      </Header>
 
-        <Text style={styles.textStyle}>ChatBot App</Text>
-    <View style={styles.logincontainer}>
-             <TextInput underlineColorAndroid='transparent' placeholder='Enter your name' style={styles.textinput}/>
+      <ImageBackground source={require('./rt.jpeg')}style={styles.container}>
+                <Content>
+                    <Text>
+                          Start here
+                    </Text>
+               </Content>
 
-            <TouchableOpacity onPress={() => Linking.openURL('https://bot.dialogflow.com/24eb5166-855e-4043-b0ba-74f9bb04608f')}>
-                        <Text style={styles.text2Style}>
-                                     Start Here
-                        </Text>
-             </TouchableOpacity>
+            <View style={styles.flowRight}>
+                           <TextInput style={styles.data}
+                           underlineColorAndroid={'transparent'}
+                            placeholder='Ask me anything'
+                           />
+             <Button style={styles.hh} onPress={() => this._handlePress.bind(this)}>
+                       <Text>Send</Text>
+              </Button>
+           </View>
+    </ImageBackground>
 
-   </View>
-</ImageBackground>
+  </Container>
 
-             );
-      }
+     );
+  }
 }
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
 
     container: {
                   flex: 1,
@@ -122,74 +147,47 @@ return (
                      width: undefined,
                   },
 
- headerStyle: {
+   headerStyle:{
 
-                  backgroundColor:'transparent',
+                  backgroundColor:'black',
                   padding:30,
                   borderColor:'transparent',
 
 
-             },
-
- headerTitleStyle: {
-                     
-                     fontSize:23,
-                     padding:10,
-
-                   },
-
- logocontainer: {
-                 
-                 flex:1,
-                  alignItems:'center',
-                  justifyContent:'center',
                 },
 
-    logo:  {
-                  width:190,
-                  height:170,
-         },
+ headerTitleStyle:{
+                   fontSize:23,
+                   padding:10,
 
-  textStyle: {
-  
-                color:'white',
-                fontSize:50,
-                justifyContent:'center',
-                flex:1,
-                alignItems:'center',
-                textAlign:'center',
+
+                  },
+
+  flowRight:{
+
+                 flexDirection: 'row',
+                 alignItems: 'center',
+                 alignSelf: 'baseline',
             },
 
-logincontainer:{
+   data: {
+                height: 40,
+                padding: 6,
+                marginRight:6,
+                flexGrow: 1,
+                fontSize: 18,
+                borderWidth: 2,
+                borderColor: 'black',
+                borderRadius: 5,
+                color: 'black',
+          },
+   hh:{
 
-                alignItems:'center',
-               },
-
-  textinput:{
-            
-            color:'black',
-             fontSize:20,
-             padding:10,
-             alignSelf:'stretch',
-             marginBottom:10,
-             borderWidth:.5,
-             borderColor:'#fff',
-             backgroundColor:'white',
-
-           },
-           
-  text2Style: {
-  
-             color:'white',
-             fontSize:35,
-             },
-
-
-
-
-
-}
+                 backgroundColor: "black",
+       },
+ }
 );
+
 ```
 
 ## Props :-
@@ -238,4 +236,4 @@ Useful resources:
 
 ## Made by rohitpardhi90@gmail.com  
    * URL OF MY GIHUB CHAT PROJECT IS  :-
-  - https://github.com/rohitpardhi1998/HPDF-Chat
+  -https://github.com/rohitpardhi1998/HPDF_PROJECT1,
