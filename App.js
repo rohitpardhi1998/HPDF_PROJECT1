@@ -102,8 +102,8 @@ render() {
          },
 
   textStyle:{
-              color:'white',
-                fontSize:50,
+              color:'black',
+                fontSize:100,
                 justifyContent:'center',
                 flex:1,
                 alignItems:'center',
